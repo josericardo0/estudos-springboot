@@ -30,4 +30,9 @@ public class DigaOlaController {
         return sb.toString();
     }
 
+    @RequestMapping("diga-ola-jsp")
+    public String digaOlaJsp(){
+        return "digaOla";
+    }
+
 }
