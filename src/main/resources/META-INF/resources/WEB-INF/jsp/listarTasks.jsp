@@ -23,6 +23,9 @@
             <td>${task.descricao}</td>
             <td>${task.dataAlvo}</td>
             <td>${task.feito}</td>
+            <td> <a href="deletar-task?id=${task.id}" class="btn btn-warning">Deletar</a></td>
+            <td> <a href="atualizar-task?id=${task.id}" class="btn btn-success">Atualizar</a></td>
+
             </tr>
     </c:forEach>
     </tbody>

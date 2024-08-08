@@ -1,16 +1,20 @@
 package model;
 
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class Task {
 
-    private int id;
+    private Integer id;
     private String usuario;
+
+    @Size(min=10, message="Insira no mínimo 10 caracteres")
     private String descricao;
     private LocalDate dataAlvo;
-    private boolean feito;
+    private Boolean feito;
 
-    public Task(int id, String usuario, String descricao, LocalDate dataAlvo, boolean feito) {
+    public Task(Integer id, String usuario, String descricao, LocalDate dataAlvo, Boolean feito) {
         super();
         this.id = id;
         this.usuario = usuario;
@@ -19,11 +23,11 @@ public class Task {
         this.feito = feito;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,7 +59,7 @@ public class Task {
         return feito;
     }
 
-    public void setFeito(boolean feito) {
+    public void setFeito(Boolean feito) {
         this.feito = feito;
     }
 
