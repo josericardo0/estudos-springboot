@@ -10,7 +10,6 @@
     <table class="table">
     <thead>
         <tr>
-        <th>id</th>
         <th>Descricao</th>
         <th>Data Alvo</th>
         <th>Feito?</th>

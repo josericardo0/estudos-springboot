@@ -47,7 +47,7 @@ public class TaskController {
             return "task";
         }
         String usuario = (String)modelo.get("nome");
-        taskService.addTask(usuario, task.getDescricao(), LocalDate.now().plusYears(1), false);
+        taskService.addTask(usuario, task.getDescricao(), task.getDataAlvo(), false);
         return "redirect:listar-tasks";
     }
 
