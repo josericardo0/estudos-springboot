@@ -21,7 +21,8 @@ public class TaskService {
     }
 
     public List<Task> findByUsuario(String usuario) {
-        return tasks;
+        Predicate<? super Task> predicate = task -> task.getUsuario().equalsIgnoreCase(usuario);
+        return tasks.stream().filter(predicate).toList();
     }
 
     public void addTask(String usuario, String descricao, LocalDate dataAlvo, boolean feito) {

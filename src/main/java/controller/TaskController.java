@@ -2,6 +2,8 @@ package controller;
 
 import jakarta.validation.Valid;
 import model.Task;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,10 +29,10 @@ public class TaskController {
 
     @RequestMapping("listar-tasks")
     public String listarTarefas(ModelMap modelo) {
-    List<Task> tasks = taskService.findByUsuario("Zecardinho");
-    modelo.addAttribute("tasks", tasks);
-    return "listarTasks";
-
+        String usuario = (String)modelo.get("nome");
+        List<Task> tasks = taskService.findByUsuario(usuario);
+        modelo.addAttribute("tasks", tasks);
+        return "listarTasks";
     }
 
     @RequestMapping(value = "add-tarefa", method = RequestMethod.GET)
@@ -75,5 +77,10 @@ public class TaskController {
         task.setUsuario(usuario);
         taskService.atualizarTask(task);
         return "redirect:listar-tasks";
+    }
+
+    private String continueLogadoUsuario(ModelMap modelo) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }
