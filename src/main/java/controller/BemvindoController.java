@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@SessionAttributes("nome")
 @Controller
+@SessionAttributes("nome")
 public class BemvindoController {
 
     @RequestMapping(value="/", method = RequestMethod.GET)

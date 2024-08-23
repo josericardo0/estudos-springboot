@@ -73,7 +73,7 @@ public class TaskController {
         if(resultado.hasErrors()) {
             return "task";
         }
-        String usuario = (String)modelo.get("nome");
+        String usuario = continueLogadoUsuario(modelo);
         task.setUsuario(usuario);
         taskService.atualizarTask(task);
         return "redirect:listar-tasks";
