@@ -1,12 +1,19 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+@Entity
 public class Task {
 
+    @Id
+    @GeneratedValue
     private Integer id;
+
     private String usuario;
 
     @Size(min=10, message="Insira no mínimo 10 caracteres")
@@ -74,4 +81,7 @@ public class Task {
                 '}';
     }
 
+    public Boolean getFeito() {
+        return feito;
+    }
 }
