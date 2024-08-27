@@ -4,33 +4,36 @@ import jakarta.validation.Valid;
 import model.Task;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import repository.TaskRepository;
+import service.TaskService;
 
 import java.time.LocalDate;
 import java.util.List;
 
-//@Controller
-@SessionAttributes("nome")
-public class TaskController {
+@Controller
+public class TaskControllerJPA {
 
-    public TaskController(TaskService taskService) {
+    public TaskControllerJPA(TaskService taskService, TaskRepository taskRepository) {
         super();
         this.taskService = taskService;
+        this.taskRepository = taskRepository;
     }
 
     private final TaskService taskService;
 
+    private final TaskRepository taskRepository;
+
+
     @RequestMapping("listar-tasks")
     public String listarTarefas(ModelMap modelo) {
         String usuario = (String)modelo.get("nome");
-        List<Task> tasks = taskService.findByUsuario(usuario);
+        List<Task> tasks = taskRepository.findByUsuario(usuario);
         modelo.addAttribute("tasks", tasks);
         return "listarTasks";
     }
@@ -38,7 +41,7 @@ public class TaskController {
     @RequestMapping(value = "add-tarefa", method = RequestMethod.GET)
     public String paginaMostrarNovaTarefa(ModelMap modelo) {
         String usuario = (String)modelo.get("nome");
-        Task task = new Task(0, usuario, "Descricao padrao",LocalDate.now().plusYears(1), false);
+        Task task = new Task(0, usuario, "Descricao padrao", LocalDate.now().plusYears(1), false);
         modelo.put("task", task);
         return "task";
     }
