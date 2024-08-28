@@ -3,6 +3,7 @@ package security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.function.Function;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-
+@EnableWebSecurity
 @Configuration
 public class SpringSecurityConfiguration {
 
@@ -27,30 +28,28 @@ public class SpringSecurityConfiguration {
     }
 
     public UserDetails criarNovoUsuario(String usuario, String senha) {
-        Function<String, String> passwordEncoder
-                = input -> passwordEncoder().encode(input);
-
-        UserDetails userDetails = User.builder()
-                .passwordEncoder(passwordEncoder)
+        return User.builder()
+                .passwordEncoder(password -> passwordEncoder().encode(password))
                 .username(usuario)
                 .password(senha)
-                .roles("USER","ADMIN")
+                .roles("USER", "ADMIN")
                 .build();
-        return userDetails;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder () {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-                auth -> auth.anyRequest().authenticated());
-        http.formLogin(withDefaults());
-        http.csrf(csrf -> csrf.disable());
-        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().authenticated())
+                .formLogin(withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers
+                        .frameOptions().disable());
 
         return http.build();
     }

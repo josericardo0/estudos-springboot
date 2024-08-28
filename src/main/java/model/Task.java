@@ -2,16 +2,16 @@ package model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
-
 import java.time.LocalDate;
 
 @Entity
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String usuario;
@@ -21,8 +21,10 @@ public class Task {
     private LocalDate dataAlvo;
     private Boolean feito;
 
+    public Task() {
+    }
+
     public Task(Integer id, String usuario, String descricao, LocalDate dataAlvo, Boolean feito) {
-        super();
         this.id = id;
         this.usuario = usuario;
         this.descricao = descricao;
@@ -62,7 +64,7 @@ public class Task {
         this.dataAlvo = dataAlvo;
     }
 
-    public boolean isFeito() {
+    public Boolean getFeito() {
         return feito;
     }
 
@@ -79,9 +81,5 @@ public class Task {
                 ", dataAlvo=" + dataAlvo +
                 ", feito=" + feito +
                 '}';
-    }
-
-    public Boolean getFeito() {
-        return feito;
     }
 }
